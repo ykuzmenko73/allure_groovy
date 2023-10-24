@@ -1,0 +1,41 @@
+/*
+ */
+
+plugins {
+    id 'groovy'
+    id 'idea'
+}
+
+ext {
+    gebVersion = "7.0"
+    seleniumVersion = "4.8.2"
+}
+
+idea {
+    module {
+        inheritOutputDirs = false
+        outputDir = file('build/classes/main')
+        testOutputDir = file('build/classes/test')
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.apache.groovy:groovy-all:4.0.5'
+
+    implementation "org.gebish:geb-spock:${gebVersion}"
+    testImplementation "org.seleniumhq.selenium:selenium-support:${seleniumVersion}"
+    implementation "org.seleniumhq.selenium:selenium-chrome-driver:${seleniumVersion}"
+
+    implementation "io.qameta.allure:allure-java-commons:2.24.0"
+
+    implementation "org.slf4j:slf4j-simple:2.0.7"
+}
+
+test {
+    systemProperties "geb.build.reportsDir": "$reportsDir/geb"
+    useJUnitPlatform()
+}
